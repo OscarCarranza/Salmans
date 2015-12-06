@@ -539,7 +539,14 @@ public class Main extends javax.swing.JFrame {
             tf_nombreProd.setText("");
             spinner_precio.setValue(0);
             spinner_tiempo.setValue(0);
-            tabla_nProd.removeAll();
+            cb_prodAdd.setSelectedIndex(0);
+           
+            DefaultTableModel model = (DefaultTableModel)tabla_nProd.getModel(); 
+            int rows = model.getRowCount(); 
+            for(int i = rows - 1; i >=0; i--){
+               model.removeRow(i); 
+            }
+            tabla_nProd.setModel(model);
         }
     }//GEN-LAST:event_ok_AgregarMouseClicked
 
@@ -603,13 +610,17 @@ public class Main extends javax.swing.JFrame {
 
     private void ok_Agregar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ok_Agregar2MouseClicked
         cb_delProd.removeAllItems();
-        
         for (Product producto : productos) {
             cb_delProd.addItem(producto);
         }
         
         productos.remove((Product)cb_delProd.getSelectedItem());
         JOptionPane.showMessageDialog(this,"Producto Eliminado!");
+       
+        cb_delProd.removeAllItems();
+        for (Product producto : productos) {
+            cb_delProd.addItem(producto);
+        }
     }//GEN-LAST:event_ok_Agregar2MouseClicked
 
     private void cb_delProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_delProdActionPerformed
@@ -662,6 +673,11 @@ public class Main extends javax.swing.JFrame {
        panel_add.setVisible(false);
        panel_del.setVisible(true);
        panel_mod.setVisible(false);
+       
+       cb_delProd.removeAllItems();
+       for(Product product:productos){
+           cb_delProd.addItem(product);
+       }
     }//GEN-LAST:event_eliminarMouseClicked
 
     private void ok_Agregar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ok_Agregar3MouseClicked

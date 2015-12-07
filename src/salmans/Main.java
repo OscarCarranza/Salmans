@@ -23,6 +23,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
+        orderSystem.setVisible(false);
         panel_add.setVisible(true);
         panel_mod.setVisible(false);
         panel_del.setVisible(false);
@@ -117,12 +118,22 @@ public class Main extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         jl_total = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        orderSystem = new javax.swing.JPanel();
+        Ventas = new javax.swing.JDialog();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tabla_ventas = new javax.swing.JTable();
+        tot_ventas = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         productoButton = new javax.swing.JLabel();
         ingredienteButton = new javax.swing.JLabel();
         cocinaButton = new javax.swing.JLabel();
         entregaButton = new javax.swing.JLabel();
+        cierreButton = new javax.swing.JLabel();
         salirButton = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -238,7 +249,7 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Cantidad"
+                "Nombre", "Descripción"
             }
         ));
         jScrollPane2.setViewportView(tabla_modProd);
@@ -256,6 +267,11 @@ public class Main extends javax.swing.JFrame {
         ok_Mod.setBounds(110, 260, 90, 26);
 
         cb_modProd.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_modProd.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_modProdItemStateChanged(evt);
+            }
+        });
         cb_modProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cb_modProdActionPerformed(evt);
@@ -471,11 +487,21 @@ public class Main extends javax.swing.JFrame {
         jPanel4.setLayout(null);
 
         newOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/newOrder.png"))); // NOI18N
+        newOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                newOrderMouseClicked(evt);
+            }
+        });
         jPanel4.add(newOrder);
         newOrder.setBounds(80, 100, 201, 38);
 
         OrderSys.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/orderSys.png"))); // NOI18N
         OrderSys.setText("jLabel20");
+        OrderSys.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OrderSysMouseClicked(evt);
+            }
+        });
         jPanel4.add(OrderSys);
         OrderSys.setBounds(290, 100, 200, 40);
 
@@ -578,8 +604,8 @@ public class Main extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(3, 3, 3)
-                            .addComponent(sp_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(sp_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(3, 3, 3)
                             .addComponent(jLabel23))
                         .addGroup(panel_ordenLayout.createSequentialGroup()
                             .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -643,6 +669,22 @@ public class Main extends javax.swing.JFrame {
         jPanel4.add(jLabel18);
         jLabel18.setBounds(0, 0, 600, 410);
 
+        orderSystem.setOpaque(false);
+
+        javax.swing.GroupLayout orderSystemLayout = new javax.swing.GroupLayout(orderSystem);
+        orderSystem.setLayout(orderSystemLayout);
+        orderSystemLayout.setHorizontalGroup(
+            orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 550, Short.MAX_VALUE)
+        );
+        orderSystemLayout.setVerticalGroup(
+            orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 240, Short.MAX_VALUE)
+        );
+
+        jPanel4.add(orderSystem);
+        orderSystem.setBounds(30, 150, 550, 240);
+
         javax.swing.GroupLayout CocinaLayout = new javax.swing.GroupLayout(Cocina.getContentPane());
         Cocina.getContentPane().setLayout(CocinaLayout);
         CocinaLayout.setHorizontalGroup(
@@ -654,8 +696,60 @@ public class Main extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
         );
 
+        jPanel5.setLayout(null);
+
+        jLabel32.setFont(new java.awt.Font("Bangers", 1, 40)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setText("ventas");
+        jPanel5.add(jLabel32);
+        jLabel32.setBounds(140, 40, 110, 44);
+
+        tabla_ventas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cliente", "Pago"
+            }
+        ));
+        jScrollPane4.setViewportView(tabla_ventas);
+
+        jPanel5.add(jScrollPane4);
+        jScrollPane4.setBounds(40, 100, 310, 130);
+
+        tot_ventas.setFont(new java.awt.Font("Bangers", 1, 18)); // NOI18N
+        tot_ventas.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel5.add(tot_ventas);
+        tot_ventas.setBounds(250, 250, 90, 20);
+
+        jLabel33.setFont(new java.awt.Font("Bangers", 1, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("Total en Ventas del día: ");
+        jPanel5.add(jLabel33);
+        jLabel33.setBounds(60, 250, 190, 20);
+
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/fondo.jpg"))); // NOI18N
+        jPanel5.add(jLabel28);
+        jLabel28.setBounds(0, 0, 400, 300);
+
+        javax.swing.GroupLayout VentasLayout = new javax.swing.GroupLayout(Ventas.getContentPane());
+        Ventas.getContentPane().setLayout(VentasLayout);
+        VentasLayout.setHorizontalGroup(
+            VentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+        );
+        VentasLayout.setVerticalGroup(
+            VentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
         jPanel1.setLayout(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/logo.jpg"))); // NOI18N
@@ -693,6 +787,16 @@ public class Main extends javax.swing.JFrame {
         jPanel1.add(entregaButton);
         entregaButton.setBounds(280, 260, 250, 48);
 
+        cierreButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/cierre.png"))); // NOI18N
+        cierreButton.setText("jLabel28");
+        cierreButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cierreButtonMouseClicked(evt);
+            }
+        });
+        jPanel1.add(cierreButton);
+        cierreButton.setBounds(0, 330, 250, 50);
+
         salirButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/salir.png"))); // NOI18N
         salirButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -700,12 +804,12 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jPanel1.add(salirButton);
-        salirButton.setBounds(150, 330, 230, 48);
+        salirButton.setBounds(280, 330, 250, 48);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/fondo.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 0, 530, 400);
+        jLabel2.setBounds(0, 0, 530, 420);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -715,7 +819,7 @@ public class Main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -726,11 +830,17 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_salirButtonMouseClicked
 
     private void productoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productoButtonMouseClicked
+       cb_prodAdd.removeAllItems();
+        for (Object stackIngrediente : stackIngredientes) {
+            cb_prodAdd.addItem(stackIngrediente);
+        }
+        
         Producto.setModal(true);
         Producto.setTitle("Salman's Panadería y Repostería");
         Producto.setSize(630, 450);
         Producto.setLocationRelativeTo(null);
         Producto.setVisible(true);
+        
     }//GEN-LAST:event_productoButtonMouseClicked
 
     private void tf_nombreProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nombreProdActionPerformed
@@ -825,18 +935,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_modProdActionPerformed
 
     private void ok_Agregar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ok_Agregar2MouseClicked
-        cb_delProd.removeAllItems();
-        for (Product producto : productos) {
-            cb_delProd.addItem(producto);
-        }
-        
-        productos.remove((Product)cb_delProd.getSelectedItem());
+        productos.remove(cb_delProd.getSelectedIndex());
+        cb_delProd.remove(cb_delProd.getSelectedIndex());
         JOptionPane.showMessageDialog(this,"Producto Eliminado!");
-       
-        cb_delProd.removeAllItems();
-        for (Product producto : productos) {
-            cb_delProd.addItem(producto);
-        }
     }//GEN-LAST:event_ok_Agregar2MouseClicked
 
     private void cb_delProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_delProdActionPerformed
@@ -928,13 +1029,8 @@ public class Main extends javax.swing.JFrame {
         }
         else{
             
-            cb_prodAdd.removeAllItems();
             stackIngredientes.push(new Ingrediente(tf_nameIng.getText(),tf_desc.getText()));
             JOptionPane.showMessageDialog(this, "Ingrediente agregado exitosamente!");
-            
-            for (Object stackIngrediente : stackIngredientes) {
-                cb_prodAdd.addItem(stackIngrediente);
-            }
             
             tf_nameIng.setText("");
             tf_desc.setText("");
@@ -955,7 +1051,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_ingredienteButtonMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        if(tf_cliente.getText().equals("") || tf_number.getText().equals("") || (Integer)sp_cantidad.getValue() == 0 || (Integer)cooks.getValue() == 0){
+        if(tf_cliente.getText().equals("") || tf_number.getText().equals("") || (Integer)sp_cantidad.getValue() == 0 || (Integer)cooks.getValue() == 0 || tabla_order.getRowCount() == 0){
              JOptionPane.showMessageDialog(this,"Llene todos los campos");
         }
         else{
@@ -965,10 +1061,17 @@ public class Main extends javax.swing.JFrame {
            tf_cliente.setText("");
            tf_number.setText("");
            sp_cantidad.setValue(0);
-           tabla_order.removeAll();
            cb_cocinaProd.setSelectedIndex(0);
-           cooks.setValue(0);
+           cooks.setValue(1);
            tempProductos.clear();
+           total = 0;
+           
+           DefaultTableModel model = (DefaultTableModel)tabla_order.getModel(); 
+            int rows = model.getRowCount(); 
+            for(int i = rows - 1; i >=0; i--){
+               model.removeRow(i); 
+            }
+            tabla_order.setModel(model);
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -997,6 +1100,7 @@ public class Main extends javax.swing.JFrame {
         tabla_order.setModel(model);
         total += ((Product)cb_cocinaProd.getSelectedItem()).getPrice() * (Integer)sp_cantidad.getValue();
         jl_total.setText("Lps." + total + "0");
+        sp_cantidad.setValue(1);
            
     }//GEN-LAST:event_jLabel23MouseClicked
 
@@ -1006,6 +1110,62 @@ public class Main extends javax.swing.JFrame {
            evt.consume();
        }
     }//GEN-LAST:event_tf_numberKeyTyped
+
+    private void newOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newOrderMouseClicked
+        panel_orden.setVisible(true);
+        orderSystem.setVisible(false);
+    }//GEN-LAST:event_newOrderMouseClicked
+
+    private void OrderSysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrderSysMouseClicked
+        panel_orden.setVisible(false);
+        orderSystem.setVisible(true);
+    }//GEN-LAST:event_OrderSysMouseClicked
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+    
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void cierreButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cierreButtonMouseClicked
+       DefaultTableModel model = (DefaultTableModel)tabla_ventas.getModel();
+       double total_ventas = 0.0;
+        for(Orden order : ordenes){
+           Object[] row = {order.getClient(),order.getTotal()};
+           model.addRow(row);
+           total_ventas += order.getTotal();
+       }
+       tabla_ventas.setModel(model);
+       tot_ventas.setText("Lps." + total_ventas + "0");
+       
+        Ventas.pack();
+        Ventas.setModal(true);
+        Ventas.setSize(400,338);
+        Ventas.setTitle("Salman´s Panadería y Repostería");
+        Ventas.setLocationRelativeTo(null);
+        Ventas.setVisible(true);
+    }//GEN-LAST:event_cierreButtonMouseClicked
+
+    private void cb_modProdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_modProdItemStateChanged
+     if(cb_modProd.getSelectedIndex() > 0){
+        tf_modName.setText(((Product)cb_modProd.getSelectedItem()).getName());
+        spinner_modPrice.setValue(((Product)cb_modProd.getSelectedItem()).getPrice());
+        spinner_modTime.setValue(((Product)cb_modProd.getSelectedItem()).getTime());
+        
+        DefaultTableModel model = (DefaultTableModel)tabla_modProd.getModel();
+        for(int i = 0; i < model.getRowCount(); i++){
+            model.removeRow(i);
+        }
+        tabla_modProd.setModel(model);
+        model = (DefaultTableModel)tabla_modProd.getModel();
+        
+        for(int i = 0; i < ((Product)cb_modProd.getSelectedItem()).getIngredients().size(); i++){
+            Object[] row = {((Product)cb_modProd.getSelectedItem()).getIngredients().get(i).getName(),((Product)cb_modProd.getSelectedItem()).getIngredients().get(i).getDesc()};
+            model.addRow(row);
+            System.out.println("row" + i);
+        }
+        tabla_modProd.setModel(model);
+     }
+
+    }//GEN-LAST:event_cb_modProdItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1047,6 +1207,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JDialog Ingrediente;
     private javax.swing.JLabel OrderSys;
     private javax.swing.JDialog Producto;
+    private javax.swing.JDialog Ventas;
     private javax.swing.JLabel agregar;
     private javax.swing.JLabel agregar1;
     private javax.swing.JComboBox cb_cocinaProd;
@@ -1054,6 +1215,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JComboBox cb_delProd;
     private javax.swing.JComboBox cb_modProd;
     private javax.swing.JComboBox cb_prodAdd;
+    private javax.swing.JLabel cierreButton;
     private javax.swing.JLabel cocinaButton;
     private javax.swing.JSpinner cooks;
     private javax.swing.JLabel eliminar;
@@ -1081,10 +1243,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1095,9 +1260,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel jl_total;
     private javax.swing.JLabel modificar;
     private javax.swing.JLabel newOrder;
@@ -1106,6 +1273,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton ok_Agregar3;
     private javax.swing.JButton ok_Agregar4;
     private javax.swing.JButton ok_Mod;
+    private javax.swing.JPanel orderSystem;
     private javax.swing.JPanel panel_add;
     private javax.swing.JPanel panel_addIng;
     private javax.swing.JPanel panel_del;
@@ -1122,12 +1290,14 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable tabla_modProd;
     private javax.swing.JTable tabla_nProd;
     private javax.swing.JTable tabla_order;
+    private javax.swing.JTable tabla_ventas;
     private javax.swing.JTextField tf_cliente;
     private javax.swing.JTextField tf_desc;
     private javax.swing.JTextField tf_modName;
     private javax.swing.JTextField tf_nameIng;
     private javax.swing.JTextField tf_nombreProd;
     private javax.swing.JTextField tf_number;
+    private javax.swing.JLabel tot_ventas;
     private javax.swing.JPanel warning;
     // End of variables declaration//GEN-END:variables
     ArrayList tempIngredientes = new ArrayList();

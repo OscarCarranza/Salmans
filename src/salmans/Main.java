@@ -1,5 +1,6 @@
 package salmans;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Stack;
 import javax.swing.JOptionPane;
@@ -93,6 +94,29 @@ public class Main extends javax.swing.JFrame {
         agregar1 = new javax.swing.JLabel();
         eliminar1 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
+        Cocina = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        newOrder = new javax.swing.JLabel();
+        OrderSys = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        panel_orden = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabla_order = new javax.swing.JTable();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        tf_cliente = new javax.swing.JTextField();
+        tf_number = new javax.swing.JTextField();
+        cb_cocinaProd = new javax.swing.JComboBox();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        sp_cantidad = new javax.swing.JSpinner();
+        jLabel25 = new javax.swing.JLabel();
+        cooks = new javax.swing.JSpinner();
+        jLabel27 = new javax.swing.JLabel();
+        jl_total = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         productoButton = new javax.swing.JLabel();
@@ -444,6 +468,192 @@ public class Main extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jPanel4.setLayout(null);
+
+        newOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/newOrder.png"))); // NOI18N
+        jPanel4.add(newOrder);
+        newOrder.setBounds(80, 100, 201, 38);
+
+        OrderSys.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/orderSys.png"))); // NOI18N
+        OrderSys.setText("jLabel20");
+        jPanel4.add(OrderSys);
+        OrderSys.setBounds(290, 100, 200, 40);
+
+        jLabel31.setFont(new java.awt.Font("Bangers", 1, 48)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setText("cocina");
+        jPanel4.add(jLabel31);
+        jLabel31.setBounds(220, 40, 150, 50);
+
+        panel_orden.setOpaque(false);
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/cliente.png"))); // NOI18N
+
+        tabla_order.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Producto", "Precio", "Cantidad"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tabla_order);
+        if (tabla_order.getColumnModel().getColumnCount() > 0) {
+            tabla_order.getColumnModel().getColumn(0).setResizable(false);
+            tabla_order.getColumnModel().getColumn(0).setHeaderValue("Producto");
+            tabla_order.getColumnModel().getColumn(1).setHeaderValue("Precio");
+        }
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/number.png"))); // NOI18N
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/orderProd.png"))); // NOI18N
+
+        jButton1.setText("OK");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
+        tf_number.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tf_numberKeyTyped(evt);
+            }
+        });
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/plus.png"))); // NOI18N
+        jLabel23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel23MouseClicked(evt);
+            }
+        });
+
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/cantidad.png"))); // NOI18N
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/cocineros.png"))); // NOI18N
+
+        cooks.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/total.png"))); // NOI18N
+
+        jl_total.setFont(new java.awt.Font("Bangers", 1, 20)); // NOI18N
+        jl_total.setForeground(new java.awt.Color(255, 255, 255));
+        jl_total.setText("Lps. 0.00");
+
+        javax.swing.GroupLayout panel_ordenLayout = new javax.swing.GroupLayout(panel_orden);
+        panel_orden.setLayout(panel_ordenLayout);
+        panel_ordenLayout.setHorizontalGroup(
+            panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_ordenLayout.createSequentialGroup()
+                .addGap(228, 228, 228)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panel_ordenLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_ordenLayout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cooks, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(132, 132, 132))
+                    .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel21)
+                        .addGroup(panel_ordenLayout.createSequentialGroup()
+                            .addComponent(cb_cocinaProd, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(3, 3, 3)
+                            .addComponent(sp_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel23))
+                        .addGroup(panel_ordenLayout.createSequentialGroup()
+                            .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel19)
+                                .addComponent(jLabel20))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tf_cliente)
+                                .addComponent(tf_number, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel_ordenLayout.createSequentialGroup()
+                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jl_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(57, 57, 57))
+        );
+        panel_ordenLayout.setVerticalGroup(
+            panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_ordenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_ordenLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jl_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(panel_ordenLayout.createSequentialGroup()
+                        .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_cliente)
+                            .addComponent(jLabel19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_number)
+                            .addComponent(jLabel20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(sp_cantidad)
+                                .addComponent(cb_cocinaProd)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel23))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panel_ordenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cooks))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jPanel4.add(panel_orden);
+        panel_orden.setBounds(30, 150, 550, 240);
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/fondo.jpg"))); // NOI18N
+        jLabel18.setText("jLabel18");
+        jPanel4.add(jLabel18);
+        jLabel18.setBounds(0, 0, 600, 410);
+
+        javax.swing.GroupLayout CocinaLayout = new javax.swing.GroupLayout(Cocina.getContentPane());
+        Cocina.getContentPane().setLayout(CocinaLayout);
+        CocinaLayout.setHorizontalGroup(
+            CocinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+        );
+        CocinaLayout.setVerticalGroup(
+            CocinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(null);
@@ -471,6 +681,11 @@ public class Main extends javax.swing.JFrame {
         ingredienteButton.setBounds(0, 260, 250, 48);
 
         cocinaButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/cocina.png"))); // NOI18N
+        cocinaButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cocinaButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(cocinaButton);
         cocinaButton.setBounds(280, 190, 250, 50);
 
@@ -534,6 +749,7 @@ public class Main extends javax.swing.JFrame {
             int time = (Integer)spinner_tiempo.getValue();
             
             productos.add(new Product(name,tempIngredientes,(double)precio,time));
+            tempIngredientes.clear();
             JOptionPane.showMessageDialog(this, "Producto agregado exitosamente!");
             
             tf_nombreProd.setText("");
@@ -738,6 +954,59 @@ public class Main extends javax.swing.JFrame {
         Ingrediente.setVisible(true);
     }//GEN-LAST:event_ingredienteButtonMouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        if(tf_cliente.getText().equals("") || tf_number.getText().equals("") || (Integer)sp_cantidad.getValue() == 0 || (Integer)cooks.getValue() == 0){
+             JOptionPane.showMessageDialog(this,"Llene todos los campos");
+        }
+        else{
+           ordenes.add(new Orden(tf_cliente.getText(),Integer.parseInt(tf_number.getText()),tempProductos,total,(Integer)cooks.getValue()));
+           JOptionPane.showMessageDialog(this, "Orden agregada!");
+           
+           tf_cliente.setText("");
+           tf_number.setText("");
+           sp_cantidad.setValue(0);
+           tabla_order.removeAll();
+           cb_cocinaProd.setSelectedIndex(0);
+           cooks.setValue(0);
+           tempProductos.clear();
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void cocinaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cocinaButtonMouseClicked
+        cb_cocinaProd.removeAllItems();
+        
+        for(Product producto:productos){
+            cb_cocinaProd.addItem(producto);
+        }
+        
+        Cocina.pack();
+        Cocina.setModal(true);
+        Cocina.setSize(600,430);
+        Cocina.setTitle("Salman´s Panadería y Repostería");
+        Cocina.setLocationRelativeTo(null);
+        Cocina.setVisible(true);
+    }//GEN-LAST:event_cocinaButtonMouseClicked
+
+    private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
+        tempProductos.add((Product)cb_cocinaProd.getSelectedItem());
+        int cant = (Integer)sp_cantidad.getValue();
+        
+        DefaultTableModel model = (DefaultTableModel)tabla_order.getModel();
+        Object[] row = {((Product)cb_cocinaProd.getSelectedItem()).getName(),((Product)cb_cocinaProd.getSelectedItem()).getPrice(),cant};
+        model.addRow(row);
+        tabla_order.setModel(model);
+        total += ((Product)cb_cocinaProd.getSelectedItem()).getPrice() * (Integer)sp_cantidad.getValue();
+        jl_total.setText("Lps." + total + "0");
+           
+    }//GEN-LAST:event_jLabel23MouseClicked
+
+    private void tf_numberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_numberKeyTyped
+       char c = evt.getKeyChar();
+       if(!Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE){
+           evt.consume();
+       }
+    }//GEN-LAST:event_tf_numberKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -774,19 +1043,24 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog Cocina;
     private javax.swing.JDialog Ingrediente;
+    private javax.swing.JLabel OrderSys;
     private javax.swing.JDialog Producto;
     private javax.swing.JLabel agregar;
     private javax.swing.JLabel agregar1;
+    private javax.swing.JComboBox cb_cocinaProd;
     private javax.swing.JComboBox cb_delIng;
     private javax.swing.JComboBox cb_delProd;
     private javax.swing.JComboBox cb_modProd;
     private javax.swing.JComboBox cb_prodAdd;
     private javax.swing.JLabel cocinaButton;
+    private javax.swing.JSpinner cooks;
     private javax.swing.JLabel eliminar;
     private javax.swing.JLabel eliminar1;
     private javax.swing.JLabel entregaButton;
     private javax.swing.JLabel ingredienteButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -796,12 +1070,21 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -811,9 +1094,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jl_total;
     private javax.swing.JLabel modificar;
+    private javax.swing.JLabel newOrder;
     private javax.swing.JButton ok_Agregar;
     private javax.swing.JButton ok_Agregar2;
     private javax.swing.JButton ok_Agregar3;
@@ -823,23 +1110,31 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel panel_addIng;
     private javax.swing.JPanel panel_del;
     private javax.swing.JPanel panel_mod;
+    private javax.swing.JPanel panel_orden;
     private javax.swing.JPanel panel_remIng;
     private javax.swing.JLabel productoButton;
     private javax.swing.JLabel salirButton;
+    private javax.swing.JSpinner sp_cantidad;
     private javax.swing.JSpinner spinner_modPrice;
     private javax.swing.JSpinner spinner_modTime;
     private javax.swing.JSpinner spinner_precio;
     private javax.swing.JSpinner spinner_tiempo;
     private javax.swing.JTable tabla_modProd;
     private javax.swing.JTable tabla_nProd;
+    private javax.swing.JTable tabla_order;
+    private javax.swing.JTextField tf_cliente;
     private javax.swing.JTextField tf_desc;
     private javax.swing.JTextField tf_modName;
     private javax.swing.JTextField tf_nameIng;
     private javax.swing.JTextField tf_nombreProd;
+    private javax.swing.JTextField tf_number;
     private javax.swing.JPanel warning;
     // End of variables declaration//GEN-END:variables
     ArrayList tempIngredientes = new ArrayList();
+    ArrayList <Product> tempProductos = new ArrayList();
     ArrayList <Product> productos = new ArrayList();
+    ArrayList <Orden> ordenes = new ArrayList();
     Stack stackIngredientes = new Stack();
+    double total = 0;
             
 }

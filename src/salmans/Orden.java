@@ -8,17 +8,27 @@ public class Orden {
     protected String client;
     protected int num_orden;
     protected ArrayList <Product> productos;
+    protected ArrayList <Integer> cantidades;
     protected double total;
     protected int cooks;
 
-    public Orden(String client, int num_orden, ArrayList<Product> productos, double total, int cooks) {
+    public Orden(String client, int num_orden, ArrayList<Product> productos, ArrayList<Integer> cantidades, double total, int cooks) {
         this.client = client;
         this.num_orden = num_orden;
         this.productos = productos;
+        this.cantidades = cantidades;
         this.total = total;
         this.cooks = cooks;
     }
 
+    public Orden(){
+        
+    }
+    
+    public Orden(String centro){
+        client = centro;
+    }
+    
     public int getCooks() {
         return cooks;
     }
@@ -59,6 +69,8 @@ public class Orden {
         this.productos = productos;
     }
     
-    
+    public String toString(){
+        return client;
+    }
     
 }

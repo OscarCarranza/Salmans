@@ -1,10 +1,29 @@
 package salmans;
 
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.SparseMultigraph;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.visualization.control.EditingModalGraphMouse;
+import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Random;
 import java.util.Stack;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.collections15.Factory;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,6 +41,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        g.addVertex(new Orden("Salman's"));
         this.setLocationRelativeTo(null);
         orderSystem.setVisible(false);
         panel_add.setVisible(true);
@@ -29,6 +49,7 @@ public class Main extends javax.swing.JFrame {
         panel_del.setVisible(false);
         warning.setVisible(false);
         panel_remIng.setVisible(false);
+        orderSystem.setVisible(false);
     }
 
     /**
@@ -74,6 +95,7 @@ public class Main extends javax.swing.JFrame {
         warning = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         modificar = new javax.swing.JLabel();
         agregar = new javax.swing.JLabel();
@@ -117,8 +139,15 @@ public class Main extends javax.swing.JFrame {
         cooks = new javax.swing.JSpinner();
         jLabel27 = new javax.swing.JLabel();
         jl_total = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         orderSystem = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jl_o1 = new javax.swing.JLabel();
+        jl_c1 = new javax.swing.JLabel();
+        jl_t1 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         Ventas = new javax.swing.JDialog();
         jPanel5 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
@@ -127,6 +156,12 @@ public class Main extends javax.swing.JFrame {
         tot_ventas = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
+        Entregas = new javax.swing.JDialog();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         productoButton = new javax.swing.JLabel();
@@ -148,35 +183,35 @@ public class Main extends javax.swing.JFrame {
             }
         });
         panel_add.add(tf_nombreProd);
-        tf_nombreProd.setBounds(150, 20, 130, 30);
+        tf_nombreProd.setBounds(150, 30, 130, 30);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/nombre.jpg"))); // NOI18N
         jLabel5.setText("jLabel5");
         panel_add.add(jLabel5);
-        jLabel5.setBounds(30, 20, 110, 25);
+        jLabel5.setBounds(30, 30, 110, 25);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/precio.jpg"))); // NOI18N
         panel_add.add(jLabel6);
-        jLabel6.setBounds(30, 60, 110, 30);
+        jLabel6.setBounds(30, 70, 110, 30);
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/ingredientes.jpg"))); // NOI18N
         panel_add.add(jLabel8);
-        jLabel8.setBounds(30, 100, 110, 30);
+        jLabel8.setBounds(30, 110, 110, 30);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/tiempo.jpg"))); // NOI18N
         panel_add.add(jLabel9);
-        jLabel9.setBounds(30, 210, 130, 30);
+        jLabel9.setBounds(30, 220, 130, 30);
 
         spinner_precio.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 5));
         panel_add.add(spinner_precio);
-        spinner_precio.setBounds(150, 60, 70, 30);
+        spinner_precio.setBounds(150, 70, 70, 30);
 
         panel_add.add(cb_prodAdd);
-        cb_prodAdd.setBounds(150, 100, 110, 30);
+        cb_prodAdd.setBounds(150, 110, 110, 30);
 
         spinner_tiempo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 1000, 10));
         panel_add.add(spinner_tiempo);
-        spinner_tiempo.setBounds(170, 210, 70, 30);
+        spinner_tiempo.setBounds(170, 220, 70, 30);
 
         tabla_nProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -189,7 +224,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabla_nProd);
 
         panel_add.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 140, 250, 60);
+        jScrollPane1.setBounds(30, 150, 250, 60);
 
         ok_Agregar.setText("OK");
         ok_Agregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -198,7 +233,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         panel_add.add(ok_Agregar);
-        ok_Agregar.setBounds(110, 250, 90, 26);
+        ok_Agregar.setBounds(110, 260, 90, 26);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/plus.png"))); // NOI18N
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -207,7 +242,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         panel_add.add(jLabel3);
-        jLabel3.setBounds(260, 100, 30, 30);
+        jLabel3.setBounds(260, 110, 30, 30);
 
         jPanel2.add(panel_add);
         panel_add.setBounds(50, 100, 300, 290);
@@ -320,13 +355,17 @@ public class Main extends javax.swing.JFrame {
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/warning.png"))); // NOI18N
         warning.add(jLabel13);
-        jLabel13.setBounds(270, 0, 30, 30);
+        jLabel13.setBounds(40, 0, 30, 30);
 
-        jLabel10.setFont(new java.awt.Font("Bangers", 1, 28)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Bangers", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("NO HAY PRODUCTOS ");
         warning.add(jLabel10);
-        jLabel10.setBounds(50, 0, 230, 30);
+        jLabel10.setBounds(80, 0, 150, 30);
+
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/warning.png"))); // NOI18N
+        warning.add(jLabel34);
+        jLabel34.setBounds(230, 0, 30, 30);
 
         jPanel2.add(warning);
         warning.setBounds(50, 100, 300, 290);
@@ -571,6 +610,8 @@ public class Main extends javax.swing.JFrame {
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/cantidad.png"))); // NOI18N
 
+        sp_cantidad.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+
         jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/cocineros.png"))); // NOI18N
 
         cooks.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
@@ -664,26 +705,87 @@ public class Main extends javax.swing.JFrame {
         jPanel4.add(panel_orden);
         panel_orden.setBounds(30, 150, 550, 240);
 
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/fondo.jpg"))); // NOI18N
-        jLabel18.setText("jLabel18");
-        jPanel4.add(jLabel18);
-        jLabel18.setBounds(0, 0, 600, 410);
-
+        orderSystem.setForeground(new java.awt.Color(255, 255, 255));
         orderSystem.setOpaque(false);
+
+        jLabel38.setFont(new java.awt.Font("Bangers", 1, 18)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel38.setText("Orden Número");
+
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        jSeparator1.setOpaque(true);
+
+        jLabel39.setFont(new java.awt.Font("Bangers", 1, 18)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel39.setText("CLIENTE");
+
+        jLabel41.setFont(new java.awt.Font("Bangers", 1, 18)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel41.setText("Tiempo restante");
+
+        jl_o1.setFont(new java.awt.Font("Bangers", 0, 18)); // NOI18N
+        jl_o1.setForeground(new java.awt.Color(255, 255, 255));
+        jl_o1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jl_c1.setFont(new java.awt.Font("Bangers", 0, 18)); // NOI18N
+        jl_c1.setForeground(new java.awt.Color(255, 255, 255));
+        jl_c1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jl_t1.setFont(new java.awt.Font("Bangers", 0, 18)); // NOI18N
+        jl_t1.setForeground(new java.awt.Color(255, 255, 255));
+        jl_t1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout orderSystemLayout = new javax.swing.GroupLayout(orderSystem);
         orderSystem.setLayout(orderSystemLayout);
         orderSystemLayout.setHorizontalGroup(
             orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
+            .addGroup(orderSystemLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(orderSystemLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel38)
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel39)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel41)
+                        .addGap(45, 45, 45))
+                    .addGroup(orderSystemLayout.createSequentialGroup()
+                        .addGroup(orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(orderSystemLayout.createSequentialGroup()
+                                .addComponent(jl_o1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jl_c1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jl_t1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(33, Short.MAX_VALUE))))
         );
         orderSystemLayout.setVerticalGroup(
             orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 240, Short.MAX_VALUE)
+            .addGroup(orderSystemLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel41))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(orderSystemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jl_o1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jl_c1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jl_t1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         jPanel4.add(orderSystem);
         orderSystem.setBounds(30, 150, 550, 240);
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/fondo.jpg"))); // NOI18N
+        jLabel18.setText("jLabel18");
+        jPanel4.add(jLabel18);
+        jLabel18.setBounds(0, 0, 600, 410);
 
         javax.swing.GroupLayout CocinaLayout = new javax.swing.GroupLayout(Cocina.getContentPane());
         Cocina.getContentPane().setLayout(CocinaLayout);
@@ -743,6 +845,43 @@ public class Main extends javax.swing.JFrame {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
         );
 
+        jPanel6.setLayout(null);
+
+        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/Mapa.png"))); // NOI18N
+        jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel37MouseClicked(evt);
+            }
+        });
+        jPanel6.add(jLabel37);
+        jLabel37.setBounds(90, 140, 250, 60);
+
+        jLabel36.setFont(new java.awt.Font("Bangers", 1, 48)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel36.setText("entregas");
+        jPanel6.add(jLabel36);
+        jLabel36.setBounds(80, 50, 190, 50);
+
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/fondo.jpg"))); // NOI18N
+        jLabel35.setText("jLabel18");
+        jPanel6.add(jLabel35);
+        jLabel35.setBounds(0, 0, 340, 440);
+
+        javax.swing.GroupLayout EntregasLayout = new javax.swing.GroupLayout(Entregas.getContentPane());
+        Entregas.getContentPane().setLayout(EntregasLayout);
+        EntregasLayout.setHorizontalGroup(
+            EntregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        EntregasLayout.setVerticalGroup(
+            EntregasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+        );
+
+        jLabel40.setFont(new java.awt.Font("Bangers", 1, 18)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setText("CLIENTE");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -784,6 +923,11 @@ public class Main extends javax.swing.JFrame {
         cocinaButton.setBounds(280, 190, 250, 50);
 
         entregaButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/entregas.png"))); // NOI18N
+        entregaButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                entregaButtonMouseClicked(evt);
+            }
+        });
         jPanel1.add(entregaButton);
         entregaButton.setBounds(280, 260, 250, 48);
 
@@ -848,7 +992,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_nombreProdActionPerformed
 
     private void ok_AgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ok_AgregarMouseClicked
-        
+
         if(tf_nombreProd.getText().equals("") || (Integer)spinner_precio.getValue() == 0 || (Integer)spinner_tiempo.getValue() == 0 || tempIngredientes.isEmpty()){
             JOptionPane.showMessageDialog(this, "Llene todos los campos");
         }
@@ -866,7 +1010,7 @@ public class Main extends javax.swing.JFrame {
             spinner_precio.setValue(0);
             spinner_tiempo.setValue(0);
             cb_prodAdd.setSelectedIndex(0);
-           
+            
             DefaultTableModel model = (DefaultTableModel)tabla_nProd.getModel(); 
             int rows = model.getRowCount(); 
             for(int i = rows - 1; i >=0; i--){
@@ -1034,6 +1178,7 @@ public class Main extends javax.swing.JFrame {
             
             tf_nameIng.setText("");
             tf_desc.setText("");
+            
         }
     }//GEN-LAST:event_ok_Agregar4MouseClicked
 
@@ -1055,7 +1200,11 @@ public class Main extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(this,"Llene todos los campos");
         }
         else{
-           ordenes.add(new Orden(tf_cliente.getText(),Integer.parseInt(tf_number.getText()),tempProductos,total,(Integer)cooks.getValue()));
+           for(int i = 0 ; i < tempProductos.size(); i++){
+               limit += tempProductos.get(i).getTime() * tempCantidades.get(i);
+           }
+           ordenes.add(new Orden(tf_cliente.getText(),Integer.parseInt(tf_number.getText()),tempProductos,tempCantidades,total,(Integer)cooks.getValue()));
+           g.addVertex(new Orden(tf_cliente.getText(),Integer.parseInt(tf_number.getText()),tempProductos,tempCantidades,total,(Integer)cooks.getValue()));
            JOptionPane.showMessageDialog(this, "Orden agregada!");
            
            tf_cliente.setText("");
@@ -1064,6 +1213,7 @@ public class Main extends javax.swing.JFrame {
            cb_cocinaProd.setSelectedIndex(0);
            cooks.setValue(1);
            tempProductos.clear();
+           tempCantidades.clear();
            total = 0;
            
            DefaultTableModel model = (DefaultTableModel)tabla_order.getModel(); 
@@ -1072,6 +1222,31 @@ public class Main extends javax.swing.JFrame {
                model.removeRow(i); 
             }
             tabla_order.setModel(model);
+            
+            //Thread de timer
+            Orden temp = ordenes.peek();
+            System.out.println(temp.toString());
+            jl_o1.setText(Integer.toString(temp.getNum_orden()));
+            jl_c1.setText(temp.getClient());
+            
+            timer = new Timer(1000, new ActionListener(){
+                
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    limit--;
+                    jl_t1.setText(Integer.toString(limit) + "sec");
+                    if(limit == 0){
+                        JOptionPane.showMessageDialog(orderSystem, "Orden Lista");
+                        jl_t1.setBackground(Color.GREEN);
+                        jl_t1.setText("Orden Lista");
+                        timer.stop();
+                    }
+                }
+            });
+            timer.start();
+            
+            
+            
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -1093,6 +1268,7 @@ public class Main extends javax.swing.JFrame {
     private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
         tempProductos.add((Product)cb_cocinaProd.getSelectedItem());
         int cant = (Integer)sp_cantidad.getValue();
+        tempCantidades.add(cant);
         
         DefaultTableModel model = (DefaultTableModel)tabla_order.getModel();
         Object[] row = {((Product)cb_cocinaProd.getSelectedItem()).getName(),((Product)cb_cocinaProd.getSelectedItem()).getPrice(),cant};
@@ -1167,6 +1343,49 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cb_modProdItemStateChanged
 
+    private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
+       JFrame frame = new JFrame("Mapa de entregas");
+        try {
+            edgeFactory = new Factory<Integer>() {
+                public Integer create() {
+                    Random r = new Random();
+                    int x = r.nextInt(20) + 1;
+                    return x;
+                }
+            };
+
+            Layout<Orden, Integer> layout = new CircleLayout(g);
+            layout.setSize(new Dimension(300, 300));
+            VisualizationViewer<Orden, Integer> vv = new VisualizationViewer<Orden, Integer>(layout);
+            vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+            vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+            vv.setPreferredSize(new Dimension(500, 500));
+
+            EditingModalGraphMouse gm = new EditingModalGraphMouse(vv.getRenderContext(), vertexFactory, edgeFactory);
+            vv.setGraphMouse(gm);
+            JMenuItem item = new JMenuItem();
+
+            frame.getContentPane().add(vv);
+        } catch (NullPointerException e) {
+            System.out.println("entro al nullpointerexception");
+            JLabel mensaje = new JLabel("No se ha agregado nada al mapa");
+            mensaje.setHorizontalAlignment(SwingConstants.CENTER);
+            frame.getContentPane().add(mensaje);
+        }
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }//GEN-LAST:event_jLabel37MouseClicked
+
+    private void entregaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entregaButtonMouseClicked
+        Entregas.pack();
+        Entregas.setModal(true);
+        Entregas.setTitle("Salman's Panadería y Repostería");
+        Entregas.setLocationRelativeTo(null);
+        Entregas.setSize(350,450);
+        Entregas.setVisible(true);
+    }//GEN-LAST:event_entregaButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1204,6 +1423,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog Cocina;
+    private javax.swing.JDialog Entregas;
     private javax.swing.JDialog Ingrediente;
     private javax.swing.JLabel OrderSys;
     private javax.swing.JDialog Producto;
@@ -1250,7 +1470,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1261,10 +1489,15 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel jl_c1;
+    private javax.swing.JLabel jl_o1;
+    private javax.swing.JLabel jl_t1;
     private javax.swing.JLabel jl_total;
     private javax.swing.JLabel modificar;
     private javax.swing.JLabel newOrder;
@@ -1303,8 +1536,15 @@ public class Main extends javax.swing.JFrame {
     ArrayList tempIngredientes = new ArrayList();
     ArrayList <Product> tempProductos = new ArrayList();
     ArrayList <Product> productos = new ArrayList();
-    ArrayList <Orden> ordenes = new ArrayList();
+    ArrayList <Integer> tempCantidades = new ArrayList();
+    PriorityQueue <Orden> ordenes = new PriorityQueue();
     Stack stackIngredientes = new Stack();
+    final Graph <Orden,Integer> g = new SparseMultigraph<Orden,Integer>();
     double total = 0;
-            
+    Factory <Orden> vertexFactory;
+    Factory <Integer> edgeFactory;
+    int nodeCount = 0, edgeCount = 0;
+    Timer timer;
+    int secondsLeft;
+    int limit = 0;
 }

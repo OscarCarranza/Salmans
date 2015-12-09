@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Orden {
     
     protected String client;
+    protected boolean isVisited;
     protected int num_orden;
     protected ArrayList <Product> productos;
     protected ArrayList <Integer> cantidades;
@@ -19,10 +20,19 @@ public class Orden {
         this.cantidades = cantidades;
         this.total = total;
         this.cooks = cooks;
+        this.isVisited = false;
     }
 
     public Orden(){
         
+    }
+
+    public boolean isIsVisited() {
+        return isVisited;
+    }
+
+    public void setIsVisited(boolean isVisited) {
+        this.isVisited = isVisited;
     }
     
     public Orden(String centro){

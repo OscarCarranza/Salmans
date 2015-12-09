@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Stack;
 import javax.swing.JFrame;
@@ -24,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.collections15.Factory;
+import static sun.java2d.cmm.ColorTransform.In;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -50,6 +50,7 @@ public class Main extends javax.swing.JFrame {
         warning.setVisible(false);
         panel_remIng.setVisible(false);
         orderSystem.setVisible(false);
+        
     }
 
     /**
@@ -173,7 +174,8 @@ public class Main extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         Entregas = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
-        jLabel37 = new javax.swing.JLabel();
+        mapa = new javax.swing.JLabel();
+        rutas = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
@@ -979,14 +981,19 @@ public class Main extends javax.swing.JFrame {
 
         jPanel6.setLayout(null);
 
-        jLabel37.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/Mapa.png"))); // NOI18N
-        jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
+        mapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/Mapa.png"))); // NOI18N
+        mapa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel37MouseClicked(evt);
+                mapaMouseClicked(evt);
             }
         });
-        jPanel6.add(jLabel37);
-        jLabel37.setBounds(90, 140, 250, 60);
+        jPanel6.add(mapa);
+        mapa.setBounds(90, 140, 250, 60);
+
+        rutas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Panaderia/Rutas.png"))); // NOI18N
+        rutas.setToolTipText("");
+        jPanel6.add(rutas);
+        rutas.setBounds(90, 220, 250, 50);
 
         jLabel36.setFont(new java.awt.Font("Bangers", 1, 48)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(255, 255, 255));
@@ -1341,8 +1348,6 @@ public class Main extends javax.swing.JFrame {
            tf_number.setText("");
            sp_cantidad.setValue(1);
            cb_cocinaProd.setSelectedIndex(0);
-           cooks.setValue(1);
-           
            total = 0;
            
            DefaultTableModel model = (DefaultTableModel)tabla_order.getModel(); 
@@ -1353,11 +1358,11 @@ public class Main extends javax.swing.JFrame {
             tabla_order.setModel(model);
             
             //Thread de timer
-            int fijo = 0;
             if(ordenes.size() == 1){
                 for(int i = 0 ; i < tempProductos.size(); i++){
                    limit += tempProductos.get(i).getTime() * tempCantidades.get(i);
                 }   
+                limit /= (Integer)cooks.getValue();
                 Orden temp = ordenes.get(ordenes.size()-1);
                 System.out.println(temp.toString());
                 jl_o1.setText(Integer.toString(temp.getNum_orden()));
@@ -1384,6 +1389,7 @@ public class Main extends javax.swing.JFrame {
                 for(int i = 0 ; i < tempProductos.size(); i++){
                    limit2 += tempProductos.get(i).getTime() * tempCantidades.get(i);
                 }   
+                limit2/=(Integer)cooks.getValue();
                 Orden temp = ordenes.get(ordenes.size()-1);
                 System.out.println(temp.toString());
                 jl_o2.setText(Integer.toString(temp.getNum_orden()));
@@ -1410,7 +1416,7 @@ public class Main extends javax.swing.JFrame {
                 for(int i = 0 ; i < tempProductos.size(); i++){
                    limit3 += tempProductos.get(i).getTime() * tempCantidades.get(i);
                 }   
-
+                limit3/=(Integer)cooks.getValue();
                 Orden temp = ordenes.get(ordenes.size()-1);
                 System.out.println(temp.toString());
                 jl_o3.setText(Integer.toString(temp.getNum_orden()));
@@ -1435,9 +1441,9 @@ public class Main extends javax.swing.JFrame {
             
             else if(ordenes.size() == 4){
                 for(int i = 0 ; i < tempProductos.size(); i++){
-                   limit3 += tempProductos.get(i).getTime() * tempCantidades.get(i);
+                   limit4 += tempProductos.get(i).getTime() * tempCantidades.get(i);
                 }   
-
+                limit4/=(Integer)cooks.getValue();
                 Orden temp = ordenes.get(ordenes.size()-1);
                 System.out.println(temp.toString());
                 jl_o4.setText(Integer.toString(temp.getNum_orden()));
@@ -1462,9 +1468,9 @@ public class Main extends javax.swing.JFrame {
             
             else if(ordenes.size() == 5){
                 for(int i = 0 ; i < tempProductos.size(); i++){
-                   limit3 += tempProductos.get(i).getTime() * tempCantidades.get(i);
+                   limit5 += tempProductos.get(i).getTime() * tempCantidades.get(i);
                 }   
-
+                limit5/=(Integer)cooks.getValue();
                 Orden temp = ordenes.get(ordenes.size()-1);
                 System.out.println(temp.toString());
                 jl_o5.setText(Integer.toString(temp.getNum_orden()));
@@ -1490,6 +1496,7 @@ public class Main extends javax.swing.JFrame {
         }
         tempProductos.clear();
         tempCantidades.clear();
+        cooks.setValue(1);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void cocinaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cocinaButtonMouseClicked
@@ -1585,7 +1592,7 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cb_modProdItemStateChanged
 
-    private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
+    private void mapaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mapaMouseClicked
        JFrame frame = new JFrame("Mapa de entregas");
         try {
             edgeFactory = new Factory<Integer>() {
@@ -1617,7 +1624,7 @@ public class Main extends javax.swing.JFrame {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }//GEN-LAST:event_jLabel37MouseClicked
+    }//GEN-LAST:event_mapaMouseClicked
 
     private void entregaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entregaButtonMouseClicked
         Entregas.pack();
@@ -1628,6 +1635,9 @@ public class Main extends javax.swing.JFrame {
         Entregas.setVisible(true);
     }//GEN-LAST:event_entregaButtonMouseClicked
 
+    public void Prim(){
+       
+    }
     /**
      * @param args the command line arguments
      */
@@ -1717,7 +1727,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
@@ -1758,6 +1767,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jl_t5;
     private javax.swing.JLabel jl_t6;
     private javax.swing.JLabel jl_total;
+    private javax.swing.JLabel mapa;
     private javax.swing.JLabel modificar;
     private javax.swing.JLabel newOrder;
     private javax.swing.JButton ok_Agregar;
@@ -1773,6 +1783,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel panel_orden;
     private javax.swing.JPanel panel_remIng;
     private javax.swing.JLabel productoButton;
+    private javax.swing.JLabel rutas;
     private javax.swing.JLabel salirButton;
     private javax.swing.JSpinner sp_cantidad;
     private javax.swing.JSpinner spinner_modPrice;
@@ -1799,6 +1810,7 @@ public class Main extends javax.swing.JFrame {
     ArrayList <Orden> ordenes = new ArrayList();
     Stack stackIngredientes = new Stack();
     final Graph <Orden,Integer> g = new SparseMultigraph<Orden,Integer>();
+    
     double total = 0;
     Factory <Orden> vertexFactory;
     Factory <Integer> edgeFactory;
